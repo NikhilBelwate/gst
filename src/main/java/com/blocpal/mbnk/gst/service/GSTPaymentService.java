@@ -1,4 +1,4 @@
-package com.blocpal.mbnk.service;
+package com.blocpal.mbnk.gst.service;
 
 import io.micronaut.context.annotation.Bean;
 

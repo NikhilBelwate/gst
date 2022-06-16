@@ -1,4 +1,4 @@
-package com.blocpal.mbnk;
+package com.blocpal.mbnk.gst;
 
 import io.micronaut.runtime.EmbeddedApplication;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;

@@ -39,13 +39,13 @@ $ cd build/libs
 
 For QA:
 ```bash
-$ gcloud functions deploy fasttag --set-env-vars GOOGLE_CLOUD_PROJECT=mbnk-integrations-qa,MICRONAUT_ENVIRONMENTS=qa --entry-point io.micronaut.gcp.function.http.HttpFunction --runtime java11 --trigger-http --memory 512MB --region=asia-south1
+$ gcloud functions deploy gst --set-env-vars GOOGLE_CLOUD_PROJECT=mbnk-integrations-qa,MICRONAUT_ENVIRONMENTS=qa --entry-point io.micronaut.gcp.function.http.HttpFunction --runtime java11 --trigger-http --memory 512MB --region=asia-south1
 ```
 
 Or for Prod, run:
 
 ```bash
-  gcloud functions deploy fasttag --set-env-vars GOOGLE_CLOUD_PROJECT=mbnk-integrations,MICRONAUT_ENVIRONMENTS=prod --entry-point io.micronaut.gcp.function.http.HttpFunction --runtime java11 --trigger-http --memory 512MB --region=asia-south1
+  gcloud functions deploy gst --set-env-vars GOOGLE_CLOUD_PROJECT=mbnk-integrations,MICRONAUT_ENVIRONMENTS=prod --entry-point io.micronaut.gcp.function.http.HttpFunction --runtime java11 --trigger-http --memory 512MB --region=asia-south1
 ```
 
 Choose unauthenticated access if you don't need auth.

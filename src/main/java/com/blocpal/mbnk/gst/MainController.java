@@ -1,4 +1,4 @@
-package com.blocpal.mbnk;
+package com.blocpal.mbnk.gst;
 
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
