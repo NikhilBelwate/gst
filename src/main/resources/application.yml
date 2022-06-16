@@ -1,6 +1,8 @@
 micronaut:
   application:
     name: gst
+  security:
+    enabled: false
 netty:
   default:
     allocator:
