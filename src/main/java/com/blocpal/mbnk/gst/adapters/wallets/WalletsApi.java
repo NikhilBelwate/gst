@@ -27,7 +27,7 @@ import java.io.IOException;
         private final static String GET_USER_KYC_DOC_IMAGE  = "/user/{userId}/kyc/{category}/image";
         private final static String PROD_URL  = "https://walletsapi.e.mbnk.com";
         private final static String UAT_URL   = "https://walletsapi-qa.e.mbnk.com";
-        private final static String LOCAL_URL = "http://localhost:8080";
+        private final static String LOCAL_URL = "http://localhost:8082";
 
         private BasicAuth auth;
 

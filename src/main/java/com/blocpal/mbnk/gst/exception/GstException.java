@@ -2,11 +2,11 @@ package com.blocpal.mbnk.gst.exception;
 
 import com.google.gson.Gson;
 
-public class FastTagException extends Exception{
-    public FastTagException(String message) {
+public class GstException extends Exception{
+    public GstException(String message) {
         super(message);
     }
-    public FastTagException(Exception e) {
+    public GstException(Exception e) {
         super(e);
     }
 

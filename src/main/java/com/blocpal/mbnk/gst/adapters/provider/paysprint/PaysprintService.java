@@ -1,10 +1,9 @@
 package com.blocpal.mbnk.gst.adapters.provider.paysprint;
 
-import com.blocpal.mbnk.gst.adapters.response.FetchConsumerResponse;
-import com.blocpal.mbnk.gst.adapters.response.StatusResponse;
-import com.blocpal.mbnk.gst.exception.FastTagException;
+import com.blocpal.mbnk.gst.adapters.request.GstInquiryRequest;
+import com.blocpal.mbnk.gst.adapters.response.GstInquiryResponse;
+import com.blocpal.mbnk.gst.exception.GstException;
 import com.blocpal.mbnk.gst.g_common.HTTPRequestMethod;
-import com.blocpal.mbnk.gst.adapters.response.OperatorListResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import jakarta.annotation.PostConstruct;
@@ -12,24 +11,21 @@ import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @Slf4j
 @Singleton
 public class PaysprintService {
     @Inject
-    PaysprintClient fastTagClient;
+    PaysprintClient paysprintClient;
 
     @Inject
     PaysprintAuthService authService;
-    FastTagException exception;
+    GstException exception;
 
-    public FastTagException getException() {
+    public GstException getException() {
         return exception;
     }
 
-    private void setException(FastTagException exception) {
+    private void setException(GstException exception) {
         this.exception = exception;
     }
 
@@ -41,18 +37,18 @@ public class PaysprintService {
                 .create();
     }
 
-/*
-    public OperatorListResponse getOperatorsList(){
+
+    public GstInquiryResponse getGstInquiryResponse(GstInquiryRequest request){
         try{
-            OperatorListResponse response= (OperatorListResponse) fastTagClient.invokeJsonRequest(HTTPRequestMethod.POST,
-                    PaysprintEndpoints.operatorListURI,"",authService.getHeaders(),OperatorListResponse.class);
+            GstInquiryResponse response= (GstInquiryResponse) paysprintClient.invokeJsonRequest(HTTPRequestMethod.POST,
+                    PaysprintEndpoints.inquiryURL,gson.toJson(request),authService.getHeaders(),GstInquiryResponse.class);
             return response;
-        }catch (FastTagException fastTagException){
-            setException(fastTagException);
+        }catch (Exception exception){
+            this.exception=new GstException(exception);
             return null;
         }
     }
-
+/*
     public FetchConsumerResponse getConsumerResponse(FetchConsumerRequest fetchConsumerRequest){
         try{
             FetchConsumerResponse response= (FetchConsumerResponse) fastTagClient.invokeJsonRequest(HTTPRequestMethod.POST,

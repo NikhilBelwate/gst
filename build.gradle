@@ -5,7 +5,7 @@ plugins {
 }
 
 version = "0.1"
-group = "com.blocpal.mbnk"
+group = "com.blocpal.mbnk.gst"
 
 repositories {
     mavenCentral()
@@ -15,7 +15,7 @@ configurations {
     invoker
 }
 dependencies {
-    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.8'
     annotationProcessor  'io.micronaut:micronaut-inject-java'
     // micronaut
     implementation('javax.annotation:javax.annotation-api:1.3.2')
@@ -34,22 +34,18 @@ dependencies {
     implementation("io.micronaut.gcp:micronaut-gcp-function-http:4.2.0")
 
     // google cloud
-    // Every function needs this dependency to get the Functions Framework API.
-    compileOnly 'com.google.cloud.functions:functions-framework-api:1.0.4'
-
-    // To run function locally using Functions Framework's local invoker
+    compileOnly("com.google.cloud.functions:functions-framework-api:1.0.4")
     invoker 'com.google.cloud.functions.invoker:java-function-invoker:1.1.0'
-
-    implementation('com.google.cloud:google-cloud-secretmanager:2.2.0')
+    implementation('com.google.cloud:google-cloud-secretmanager:2.1.7')
     implementation platform('com.google.cloud:libraries-bom:20.9.0')
-    implementation 'com.google.firebase:firebase-admin:8.2.0'
+    implementation 'com.google.firebase:firebase-admin:8.1.0'
     // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
     implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
 
 
     // others
     compileOnly 'org.projectlombok:lombok:1.18.24'
-    implementation 'org.modelmapper:modelmapper:3.1.0'
+    implementation 'org.modelmapper:modelmapper:2.4.2'
     implementation 'org.apache.commons:commons-lang3:3.12.0'
     implementation ('org.json:json:20201115')
     // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api
@@ -67,12 +63,12 @@ dependencies {
 
     // test
     testImplementation('io.micronaut:micronaut-http-client:3.4.3')
-    testImplementation 'io.micronaut:micronaut-http-server-netty:3.4.2'
+    testImplementation 'io.micronaut:micronaut-http-server-netty:3.5.1'
     testImplementation('com.google.cloud.functions:functions-framework-api:1.0.4')
     testImplementation 'org.mockito:mockito-core:4.5.1'
     testImplementation 'org.mockito:mockito-junit-jupiter:4.5.1'
 
-    implementation('com.squareup.okhttp3:okhttp:4.9.3')
+    implementation('com.squareup.okhttp3:okhttp:4.10.0')
 
 }
 
@@ -80,13 +76,12 @@ java {
     sourceCompatibility = JavaVersion.toVersion("11")
     targetCompatibility = JavaVersion.toVersion("11")
 }
-
 micronaut {
     runtime("netty")
     testRuntime("junit5")
     processing {
         incremental(true)
-        annotations("com.blocpal.paysprint.*")
+        annotations("com.blocpal.mbnk.gst.*")
     }
 }
 tasks.register("runFunction", JavaExec) {
@@ -101,5 +96,6 @@ tasks.register("runFunction", JavaExec) {
         args('--classpath', files(configurations.runtimeClasspath, sourceSets.main.output).asPath)
     }
 }
+
 
 

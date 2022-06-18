@@ -1,5 +1,5 @@
 applicationType: default
-defaultPackage: com.blocpal.mbnk
+defaultPackage: com.blocpal.mbnk.gst
 testFramework: junit
 sourceLanguage: java
 buildTool: gradle

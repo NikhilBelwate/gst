@@ -1,6 +1,6 @@
 package com.blocpal.mbnk.gst.adapters.provider.paysprint;
 
-import com.blocpal.mbnk.gst.exception.FastTagException;
+import com.blocpal.mbnk.gst.exception.GstException;
 import com.blocpal.mbnk.gst.g_common.HTTPRequestMethod;
 import com.blocpal.mbnk.gst.adapters.response.CommonResponse;
 import com.google.gson.Gson;
@@ -61,7 +61,7 @@ public class PaysprintClient {
             String body,
             Map<String, String> headers,
             Type tokenType
-    ) throws FastTagException {
+    ) throws GstException {
         log.debug(String.format("calling gst api ->  uri: %s, body: %s", uri, body));
         RequestBody requestBody = RequestBody.create(body, MediaType.get("application/json; charset=utf-8"));
         Request request = getJsonRequest(method, uri, requestBody, headers);
@@ -73,7 +73,7 @@ public class PaysprintClient {
             return res;
         }
         catch (Exception e){
-            throw new FastTagException(e);
+            throw new GstException(e);
         }
     }
 
