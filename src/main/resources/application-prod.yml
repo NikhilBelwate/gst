@@ -1,0 +1,6 @@
+micronaut:
+  application:
+    name: func_pay_sprint
+  server:
+    cors:
+      enabled: true
