@@ -1,0 +1,3 @@
+[submodule "gcloud_common"]
+	path = gcloud_common
+	url = https://github.com/Blocpal-Inc/gcloud_common.git

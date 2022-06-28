@@ -7,4 +7,7 @@ public interface PaysprintEndpoints {
 
     String inquiryURL="inquiry";
 
+    String processURL="process";
+
+    String verificationURL="verification";
 }

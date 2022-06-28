@@ -1,6 +1,6 @@
-applicationType: default
-defaultPackage: com.blocpal.mbnk.gst
+applicationType: function
+defaultPackage: com.blocpal.pay.sprint
 testFramework: junit
 sourceLanguage: java
 buildTool: gradle
-features: [annotation-api, app-name, gradle, http-client, jackson-databind, java, java-application, junit, logback, micronaut-build, netty-server, readme, shade, yaml]
+features: [annotation-api, app-name, google-cloud-function, gradle, java, junit, logback, readme, shade, yaml]

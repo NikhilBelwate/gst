@@ -1,9 +1,15 @@
 micronaut:
   application:
-    name: gst
+    name: func_pay_sprint
+  server:
+    cors:
+      enabled: true
   security:
-    enabled: false
-netty:
-  default:
-    allocator:
-      max-order: 3
+    token:
+      jwt:
+        enabled: true
+    endpoints:
+      logout:
+        enabled: false
+      login:
+        enabled: false

@@ -1,9 +1,13 @@
 package com.blocpal.mbnk.gst.adapters.provider.paysprint;
 
+import com.blocpal.common.client.HTTPRequestMethod;
 import com.blocpal.mbnk.gst.adapters.request.GstInquiryRequest;
+import com.blocpal.mbnk.gst.adapters.request.GstProcessRequest;
+import com.blocpal.mbnk.gst.adapters.request.GstVerificationRequest;
 import com.blocpal.mbnk.gst.adapters.response.GstInquiryResponse;
+import com.blocpal.mbnk.gst.adapters.response.GstProcessResponse;
+import com.blocpal.mbnk.gst.adapters.response.GstVerificationResponse;
 import com.blocpal.mbnk.gst.exception.GstException;
-import com.blocpal.mbnk.gst.g_common.HTTPRequestMethod;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import jakarta.annotation.PostConstruct;
@@ -48,15 +52,35 @@ public class PaysprintService {
             return null;
         }
     }
+    public GstProcessResponse getGstProcessResponse(GstProcessRequest request){
+        try{
+            GstProcessResponse response= (GstProcessResponse) paysprintClient.invokeJsonRequest(HTTPRequestMethod.POST,
+                    PaysprintEndpoints.processURL,gson.toJson(request),authService.getHeaders(),GstProcessResponse.class);
+            return response;
+        }catch (Exception exception){
+            this.exception=new GstException(exception);
+            return null;
+        }
+    }
+    public GstVerificationResponse getGstVerificationResponse(GstVerificationRequest request){
+        try{
+            GstVerificationResponse response= (GstVerificationResponse) paysprintClient.invokeJsonRequest(HTTPRequestMethod.POST,
+                    PaysprintEndpoints.verificationURL,gson.toJson(request),authService.getHeaders(),GstVerificationResponse.class);
+            return response;
+        }catch (Exception exception){
+            this.exception=new GstException(exception);
+            return null;
+        }
+    }
 /*
     public FetchConsumerResponse getConsumerResponse(FetchConsumerRequest fetchConsumerRequest){
         try{
-            FetchConsumerResponse response= (FetchConsumerResponse) fastTagClient.invokeJsonRequest(HTTPRequestMethod.POST,
+            FetchConsumerResponse response= (FetchConsumerResponse) gstClient.invokeJsonRequest(HTTPRequestMethod.POST,
                     PaysprintEndpoints.fetchConsumerDetailsURI,gson.toJson(fetchConsumerRequest),authService.getHeaders(),FetchConsumerResponse.class);
             return response;
 
-        }catch (FastTagException fastTagException){
-            setException(fastTagException);
+        }catch (gstException gstException){
+            setException(gstException);
             return null;
         }
     }
@@ -66,12 +90,12 @@ public class PaysprintService {
         try{
             Map<String,Integer> requestData=new HashMap<>();
             requestData.put("referenceid",referenceid);
-            StatusResponse response= (StatusResponse) fastTagClient.invokeJsonRequest(HTTPRequestMethod.POST,
+            StatusResponse response= (StatusResponse) gstClient.invokeJsonRequest(HTTPRequestMethod.POST,
                     PaysprintEndpoints.statusURI,gson.toJson(requestData),authService.getHeaders(),StatusResponse.class);
             return response;
 
-        }catch (FastTagException fastTagException){
-            setException(fastTagException);
+        }catch (gstException gstException){
+            setException(gstException);
             return null;
         }
     }*/

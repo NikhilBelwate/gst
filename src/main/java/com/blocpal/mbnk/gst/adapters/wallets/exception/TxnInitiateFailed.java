@@ -1,7 +1,7 @@
 package com.blocpal.mbnk.gst.adapters.wallets.exception;
 
+import com.blocpal.common.exception.ServiceException;
 import com.blocpal.mbnk.gst.common.AppStatusCodes;
-import com.blocpal.mbnk.gst.g_common.ServiceException;
 
 public class TxnInitiateFailed extends ServiceException {
     private static final String MESSAGE = "Initiate Transaction failed";

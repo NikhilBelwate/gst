@@ -1,16 +1,16 @@
 package com.blocpal.mbnk.gst.adapters.wallets;
 
 
+import com.blocpal.common.client.BasicAuth;
+import com.blocpal.common.client.HTTPClient;
+import com.blocpal.common.client.HTTPRequestMethod;
+import com.blocpal.common.response.ServiceResult;
 import com.blocpal.mbnk.gst.adapters.wallets.exception.GetUserInfoFailed;
 import com.blocpal.mbnk.gst.adapters.wallets.exception.GetUserKycDocImageFailed;
 import com.blocpal.mbnk.gst.adapters.wallets.exception.TxnInitiateFailed;
 import com.blocpal.mbnk.gst.adapters.wallets.exception.TxnUpdateFailed;
 import com.blocpal.mbnk.gst.adapters.wallets.request.InitiateTxnRequest;
 import com.blocpal.mbnk.gst.adapters.wallets.request.UpdateTxnRequest;
-import com.blocpal.mbnk.gst.g_common.BasicAuth;
-import com.blocpal.mbnk.gst.g_common.HTTPClient;
-import com.blocpal.mbnk.gst.g_common.HTTPRequestMethod;
-import com.blocpal.mbnk.gst.g_common.ServiceResult;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +27,7 @@ import java.io.IOException;
         private final static String GET_USER_KYC_DOC_IMAGE  = "/user/{userId}/kyc/{category}/image";
         private final static String PROD_URL  = "https://walletsapi.e.mbnk.com";
         private final static String UAT_URL   = "https://walletsapi-qa.e.mbnk.com";
-        private final static String LOCAL_URL = "http://localhost:8082";
+        private final static String LOCAL_URL = "http://localhost:8080";
 
         private BasicAuth auth;
 
@@ -36,7 +36,7 @@ import java.io.IOException;
         public WalletsApi(String userName, String password) {
             auth = BasicAuth.builder()
                     .userName(userName)
-                    .passWord(password)
+                    .password(password)
                     .build();
         }
 

@@ -1,7 +1,6 @@
 package com.blocpal.mbnk.gst.adapters.integrations.model;
 
-import com.blocpal.mbnk.gst.g_common.common.objectmapper.CustomObjectMapper;
-
+import com.blocpal.common.objectmapper.CustomObjectMapper;
 import com.google.cloud.firestore.annotation.PropertyName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

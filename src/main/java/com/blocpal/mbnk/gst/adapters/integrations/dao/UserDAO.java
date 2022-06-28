@@ -1,9 +1,9 @@
 package com.blocpal.mbnk.gst.adapters.integrations.dao;
 
+import com.blocpal.common.exception.DatabaseException;
+import com.blocpal.common.service.FirestoreService;
+import com.blocpal.common.utility.FirestoreUtility;
 import com.blocpal.mbnk.gst.adapters.integrations.model.IntegrationsUser;
-import com.blocpal.mbnk.gst.g_common.DatabaseException;
-import com.blocpal.mbnk.gst.g_common.FirestoreService;
-import com.blocpal.mbnk.gst.g_common.FirestoreUtility;
 import com.google.cloud.firestore.Firestore;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;

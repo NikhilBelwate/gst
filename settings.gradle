@@ -1,2 +1,2 @@
 rootProject.name="gst"
-
+include ('gcloud_common')

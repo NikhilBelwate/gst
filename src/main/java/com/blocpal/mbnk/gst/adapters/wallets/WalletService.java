@@ -1,6 +1,9 @@
 package com.blocpal.mbnk.gst.adapters.wallets;
 
 
+import com.blocpal.common.response.ServiceResult;
+import com.blocpal.common.service.SecretManagerService;
+import com.blocpal.common.utility.IdGenUtility;
 import com.blocpal.mbnk.gst.adapters.provider.paysprint.PaysprintConstant;
 import com.blocpal.mbnk.gst.adapters.wallets.exception.GetUserInfoFailed;
 import com.blocpal.mbnk.gst.adapters.wallets.exception.GetUserKycDocImageFailed;
@@ -8,9 +11,6 @@ import com.blocpal.mbnk.gst.adapters.wallets.exception.WalletException;
 import com.blocpal.mbnk.gst.adapters.wallets.model.UserInfo;
 import com.blocpal.mbnk.gst.adapters.wallets.request.InitiateTxnRequest;
 import com.blocpal.mbnk.gst.adapters.wallets.request.UpdateTxnRequest;
-import com.blocpal.mbnk.gst.g_common.IdGenUtility;
-import com.blocpal.mbnk.gst.g_common.SecretManagerService;
-import com.blocpal.mbnk.gst.g_common.ServiceResult;
 import com.google.gson.Gson;
 import jakarta.annotation.PostConstruct;
 import jakarta.inject.Inject;

@@ -1,11 +1,10 @@
 package com.blocpal.mbnk.gst.adapters.provider.paysprint;
 
-import com.blocpal.mbnk.gst.adapters.integrations.dao.UserDAO;
+import com.blocpal.common.service.SecretManagerService;
+import com.blocpal.common.service.StorageService;
+import com.blocpal.common.utility.IdGenUtility;
 import com.blocpal.mbnk.gst.adapters.request.GstRequestHeader;
 import com.blocpal.mbnk.gst.adapters.wallets.WalletService;
-import com.blocpal.mbnk.gst.g_common.IdGenUtility;
-import com.blocpal.mbnk.gst.g_common.SecretManagerService;
-import com.blocpal.mbnk.gst.g_common.StorageService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.annotation.PostConstruct;
@@ -27,12 +26,9 @@ public class PaysprintAuthService {
 
     @Inject
     WalletService walletService;
-    
+
     @Inject
     StorageService storageService;
-    
-    @Inject
-    UserDAO userDAO;
 
     @Inject
     private SecretManagerService secretManagerService;

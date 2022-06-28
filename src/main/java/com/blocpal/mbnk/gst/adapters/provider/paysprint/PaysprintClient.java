@@ -1,8 +1,8 @@
 package com.blocpal.mbnk.gst.adapters.provider.paysprint;
 
-import com.blocpal.mbnk.gst.exception.GstException;
-import com.blocpal.mbnk.gst.g_common.HTTPRequestMethod;
+import com.blocpal.common.client.HTTPRequestMethod;
 import com.blocpal.mbnk.gst.adapters.response.CommonResponse;
+import com.blocpal.mbnk.gst.exception.GstException;
 import com.google.gson.Gson;
 import jakarta.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +36,7 @@ public class PaysprintClient {
         }else if (projectId.equalsIgnoreCase("mbnk-integrations")) {
             url = PaysprintEndpoints.basePRODURL;
         }
-        log.debug("FastTag API Base URL: "+url);
+        log.debug("gst API Base URL: "+url);
         return url;
     }
     private Request getJsonRequest(HTTPRequestMethod method, String uri, RequestBody body, Map<String, String> headers) {

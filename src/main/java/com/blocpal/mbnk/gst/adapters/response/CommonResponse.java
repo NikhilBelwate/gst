@@ -29,4 +29,5 @@ public abstract class CommonResponse {
     public void setMessage(String message) {
         this.message = message;
     }
+
 }
