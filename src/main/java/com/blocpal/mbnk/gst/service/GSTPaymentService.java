@@ -43,8 +43,6 @@ public class GSTPaymentService {
     @Inject
     private PaysprintService paysprintService;
     @Inject
-    private GSTdbService gstDBService;
-    @Inject
     private WalletService walletService;
     @Inject
     private ServiceProviderDataDaoService serviceProviderDataDaoService;
@@ -153,47 +151,8 @@ public class GSTPaymentService {
         }
     }
 
-    public int doStatusUpdate() {
-        try {
-            List<TransactionLog> pendingTxnList = gstDBService.getPendingTransactions();
-            AtomicInteger count = new AtomicInteger();
-            pendingTxnList.forEach(transaction -> {
-                try {
-                    if (updatePendingTxnStatus(transaction))
-                        count.getAndIncrement();
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            });
-            return count.get();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
 
-    }
 
-    public Boolean updatePendingTxnStatus(TransactionLog transactionLog) throws Exception {
-        //This function return true if transaction is either FAILED or SUCCESS else return false
-        VerificationRequest request = new VerificationRequest();
-        request.setReferenceNumber(transactionLog.getSp().getGibTxnId());
-        VerificationResponse response = paysprintService.getGstVerificationResponse(request);
-        if (response != null) {
-            if (PaysprintEndpoints.SUCCESS.equals(response.getData().getTransactionStatus())) {
-                //Success
-                updateConfirmedWallet(transactionLog, response);
-                return true;
-            } else if (PaysprintEndpoints.FAILED.equals(response.getData().getTransactionStatus())) {
-                //Failed
-                updateRejectWallet(transactionLog, response);
-                return true;
-            } else {
-                //Pending
-                return false;
-            }
-        } else {
-            return false;
-        }
-    }
 
     private void updateConfirmedWallet(String txnId, ProcessRequest request, ProcessResponse response) throws Exception {
         Map<String, String> extIds = new HashMap<>();
@@ -201,27 +160,15 @@ public class GSTPaymentService {
         extIds.put("GibTxnId", response.getData().getGibTxnId());
         extIds.put("cpin", request.getCpin());
         walletService.updateWalletTxn(UpdateTxnRequest.builder().txnId(txnId).status("CONFIRMED").extIds(extIds).statusMessage(response.getMessage()).build());
-        gstDBService.updateStatusInTxnLog(txnId, PaysprintEndpoints.SUCCESS);
+        integrationService.updateStatusInTxnLog(txnId, PaysprintEndpoints.SUCCESS);
     }
 
-    private void updateConfirmedWallet(TransactionLog transaction, VerificationResponse response) throws Exception {
-        Map<String, String> extIds = new HashMap<>();
-        extIds.put("tId", transaction.getSp().gettId());
-        extIds.put("cpin", transaction.getCus().getCpin());
-        extIds.put("GibTxnId", response.getData().getGibTxnId());
-        walletService.updateWalletTxn(UpdateTxnRequest.builder().txnId(transaction.getSp().gettId()).status("CONFIRMED").extIds(extIds).statusMessage(response.getMessage()).build());
-        gstDBService.updateStatusInTxnLog(transaction.getSp().gettId(), PaysprintEndpoints.SUCCESS);
-    }
 
     private void updateRejectWallet(String txnId, ProcessRequest request, ProcessResponse response) throws Exception {
         walletService.updateWalletTxn(UpdateTxnRequest.builder().txnId(txnId).status("REJECT").statusMessage(response.getMessage()).build());
-        gstDBService.updateStatusInTxnLog(txnId, PaysprintEndpoints.FAILED);
+        integrationService.updateStatusInTxnLog(txnId, PaysprintEndpoints.FAILED);
     }
 
-    private void updateRejectWallet(TransactionLog transaction, VerificationResponse response) throws Exception {
-        walletService.updateWalletTxn(UpdateTxnRequest.builder().txnId(transaction.getSp().gettId()).status("REJECT").statusMessage(response.getMessage()).build());
-        gstDBService.updateStatusInTxnLog(transaction.getSp().gettId(), PaysprintEndpoints.FAILED);
-    }
 
     public String getPDFStream(String referenceNumber) {
         return "JVBERi0xLjQKJeLjz9MKMSAwIG9iago8PC9UeXBlL1hPYmplY3QvQ29sb3JTcGFjZVsvSW5kZXhl\\nZC9EZXZpY2VSR0IgMjU1KPBpXCnD1OPw9PhNf6qIqcYgX5XS3";

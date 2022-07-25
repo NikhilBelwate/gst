@@ -58,12 +58,7 @@ public class MainController {
     public ServiceResult<Object> verification(@Header("Authorization") String token, @NotEmpty @QueryValue String referenceNumber) throws GstException {
         return new ServiceResult<>(gstPaymentService.doVerification(referenceNumber));
     }
-    @Secured(SecurityRule.IS_ANONYMOUS)
-    @Post("/updatePendingTxnStatus")
-    public ServiceResult<Object> updatePendingTxnStatus() {
-        String result = "{'Total_updated':'"+gstPaymentService.doStatusUpdate()+"'}";
-        return new ServiceResult<>(result);
-    }
+
     @Secured(SecurityRule.IS_ANONYMOUS)
     @Produces(MediaType.APPLICATION_PDF)
     @Get("/download")
