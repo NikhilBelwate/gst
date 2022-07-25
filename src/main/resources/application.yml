@@ -1,9 +1,9 @@
 micronaut:
   application:
-    name: func_pay_sprint
+    name: func_pay_sprint_gst
   server:
-    cors:
-      enabled: true
+    cores:
+      enabled: false
   security:
     token:
       jwt:

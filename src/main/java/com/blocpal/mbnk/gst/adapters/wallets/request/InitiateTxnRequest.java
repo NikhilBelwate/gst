@@ -17,6 +17,6 @@ public class InitiateTxnRequest {
     private String type;
     private String subType;
     private String cur;
-    private Double txnAmt;
+    private String txnAmt;
     private TxnInfo txnInfo;
 }

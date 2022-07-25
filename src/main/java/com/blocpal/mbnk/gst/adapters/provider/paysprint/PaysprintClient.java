@@ -73,7 +73,7 @@ public class PaysprintClient {
             return res;
         }
         catch (Exception e){
-            throw new GstException(e);
+            throw new GstException(403,"Paysprint Service Provider is not responding. Please try after sometime.",false);
         }
     }
 

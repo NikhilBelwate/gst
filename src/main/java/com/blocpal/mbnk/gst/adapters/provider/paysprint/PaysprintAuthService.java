@@ -49,6 +49,8 @@ public class PaysprintAuthService {
         Map<String,String> paysprintKeys = secretManagerService.getSecretMap(PaysprintConstant.PROVIDER_NAME);
         partnerId = paysprintKeys.get("partnerId");
         secretKey = paysprintKeys.get("secretKey");
+        partnerId="PS00352";
+        secretKey="UFMwMDM1MjNkMzg2ZGIyNGUxMTYyMTIyYzcxZjEyYWJhNmFhM2Q4";
         projectId = System.getenv("GOOGLE_CLOUD_PROJECT");
         if (projectId.equalsIgnoreCase("mbnk-integrations-qa")) {
             baseUrl = PaysprintEndpoints.baseUATURL;

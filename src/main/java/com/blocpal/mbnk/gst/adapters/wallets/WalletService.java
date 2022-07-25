@@ -83,7 +83,7 @@ public class WalletService {
                 .type(PaysprintConstant.TXN_TYPE)
                 .subType(PaysprintConstant.TXN_SUB_TYPE)
                 .cur(PaysprintConstant.DEFAULT_CUR)
-                .txnAmt(0.0)
+                .txnAmt("0.0")
                 .build();
 
         ServiceResult<Object> result = walletsApi.initiateWalletTxn(
@@ -127,5 +127,12 @@ public class WalletService {
     	log.info("<-- Get Wallet Id "+ walletId);
     	    	
     	return walletId;
+    }
+    public ServiceResult<Object> initiateWalletTxn(InitiateTxnRequest initiateTxnRequest) {
+        return walletsApi.initiateWalletTxn(initiateTxnRequest);
+    }
+
+    public ServiceResult<Object> updateWalletTxn(UpdateTxnRequest confirmed) {
+        return walletsApi.updateWalletTxn(confirmed);
     }
 }

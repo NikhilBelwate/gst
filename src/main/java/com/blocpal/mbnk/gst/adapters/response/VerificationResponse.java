@@ -7,8 +7,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper=false)
-public class GstProcessResponse extends CommonResponse{
+public class VerificationResponse extends CommonResponse{
     @SerializedName("data")
     private ProcessDetails data;
-
 }

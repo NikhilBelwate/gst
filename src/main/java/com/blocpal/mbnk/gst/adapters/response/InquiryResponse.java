@@ -1,13 +1,13 @@
 package com.blocpal.mbnk.gst.adapters.response;
 
-import com.blocpal.mbnk.gst.model.ProcessDetails;
+import com.blocpal.mbnk.gst.model.Transaction;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper=false)
-public class GstVerificationResponse extends CommonResponse{
+public class InquiryResponse extends CommonResponse{
     @SerializedName("data")
-    private ProcessDetails data;
+    private Transaction data;
 }

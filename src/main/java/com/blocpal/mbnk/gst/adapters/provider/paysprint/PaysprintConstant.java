@@ -9,4 +9,5 @@ public class PaysprintConstant {
 
     static public final String WALLET_REJECT_STATUS = "REJECT";
     static public final String WALLET_CONFIRMED_STATUS = "CONFIRMED";
+    public static final String TRANSACTION_TYPE = "GST-PAYMENT";
 }

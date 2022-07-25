@@ -1,12 +1,14 @@
 package com.blocpal.mbnk.gst.adapters.provider.paysprint;
 
 import com.blocpal.common.client.HTTPRequestMethod;
-import com.blocpal.mbnk.gst.adapters.request.GstInquiryRequest;
-import com.blocpal.mbnk.gst.adapters.request.GstProcessRequest;
-import com.blocpal.mbnk.gst.adapters.request.GstVerificationRequest;
-import com.blocpal.mbnk.gst.adapters.response.GstInquiryResponse;
-import com.blocpal.mbnk.gst.adapters.response.GstProcessResponse;
-import com.blocpal.mbnk.gst.adapters.response.GstVerificationResponse;
+import com.blocpal.mbnk.gst.adapters.request.DownloadRequest;
+import com.blocpal.mbnk.gst.adapters.request.InquiryRequest;
+import com.blocpal.mbnk.gst.adapters.request.ProcessRequest;
+import com.blocpal.mbnk.gst.adapters.request.VerificationRequest;
+import com.blocpal.mbnk.gst.adapters.response.DownloadResponse;
+import com.blocpal.mbnk.gst.adapters.response.InquiryResponse;
+import com.blocpal.mbnk.gst.adapters.response.ProcessResponse;
+import com.blocpal.mbnk.gst.adapters.response.VerificationResponse;
 import com.blocpal.mbnk.gst.exception.GstException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -23,15 +25,7 @@ public class PaysprintService {
 
     @Inject
     PaysprintAuthService authService;
-    GstException exception;
 
-    public GstException getException() {
-        return exception;
-    }
-
-    private void setException(GstException exception) {
-        this.exception = exception;
-    }
 
     Gson gson;
     @PostConstruct
@@ -40,63 +34,49 @@ public class PaysprintService {
                 .serializeNulls()
                 .create();
     }
-
-
-    public GstInquiryResponse getGstInquiryResponse(GstInquiryRequest request){
+    
+    public InquiryResponse getGstInquiryResponse(InquiryRequest request, Boolean isNew) throws GstException {
         try{
-            GstInquiryResponse response= (GstInquiryResponse) paysprintClient.invokeJsonRequest(HTTPRequestMethod.POST,
-                    PaysprintEndpoints.inquiryURL,gson.toJson(request),authService.getHeaders(),GstInquiryResponse.class);
+            String url;
+            if(isNew)
+                url=PaysprintEndpoints.inquiryURL;
+            else
+                url=PaysprintEndpoints.refetchURL;
+
+            InquiryResponse response= (InquiryResponse) paysprintClient.invokeJsonRequest(HTTPRequestMethod.POST,
+                    url,gson.toJson(request),authService.getHeaders(), InquiryResponse.class);
             return response;
-        }catch (Exception exception){
-            this.exception=new GstException(exception);
-            return null;
+        }catch (GstException gstException){
+            throw gstException;
         }
     }
-    public GstProcessResponse getGstProcessResponse(GstProcessRequest request){
+    public DownloadResponse getGstDownloadResponse(String referenceNumber) throws GstException {
         try{
-            GstProcessResponse response= (GstProcessResponse) paysprintClient.invokeJsonRequest(HTTPRequestMethod.POST,
-                    PaysprintEndpoints.processURL,gson.toJson(request),authService.getHeaders(),GstProcessResponse.class);
+            DownloadRequest request=new DownloadRequest();
+            request.setReferenceNumber(referenceNumber);
+            DownloadResponse response= (DownloadResponse) paysprintClient.invokeJsonRequest(HTTPRequestMethod.POST,
+                    PaysprintEndpoints.downloadURL,gson.toJson(request),authService.getHeaders(), DownloadResponse.class);
             return response;
-        }catch (Exception exception){
-            this.exception=new GstException(exception);
-            return null;
+        }catch (GstException gstException){
+            throw gstException;
         }
     }
-    public GstVerificationResponse getGstVerificationResponse(GstVerificationRequest request){
+    public ProcessResponse getGstProcessResponse(ProcessRequest request) throws GstException {
         try{
-            GstVerificationResponse response= (GstVerificationResponse) paysprintClient.invokeJsonRequest(HTTPRequestMethod.POST,
-                    PaysprintEndpoints.verificationURL,gson.toJson(request),authService.getHeaders(),GstVerificationResponse.class);
+            ProcessResponse response= (ProcessResponse) paysprintClient.invokeJsonRequest(HTTPRequestMethod.POST,
+                    PaysprintEndpoints.processURL,gson.toJson(request),authService.getHeaders(), ProcessResponse.class);
             return response;
-        }catch (Exception exception){
-            this.exception=new GstException(exception);
-            return null;
+        }catch (GstException gstException){
+            throw gstException;
         }
     }
-/*
-    public FetchConsumerResponse getConsumerResponse(FetchConsumerRequest fetchConsumerRequest){
+    public VerificationResponse getGstVerificationResponse(VerificationRequest request) throws GstException {
         try{
-            FetchConsumerResponse response= (FetchConsumerResponse) gstClient.invokeJsonRequest(HTTPRequestMethod.POST,
-                    PaysprintEndpoints.fetchConsumerDetailsURI,gson.toJson(fetchConsumerRequest),authService.getHeaders(),FetchConsumerResponse.class);
+            VerificationResponse response= (VerificationResponse) paysprintClient.invokeJsonRequest(HTTPRequestMethod.POST,
+                    PaysprintEndpoints.verificationURL,gson.toJson(request),authService.getHeaders(), VerificationResponse.class);
             return response;
-
-        }catch (gstException gstException){
-            setException(gstException);
-            return null;
+        }catch (GstException gstException){
+            throw gstException;
         }
     }
-
-
-    public StatusResponse getStatusResponse(Integer referenceid) {
-        try{
-            Map<String,Integer> requestData=new HashMap<>();
-            requestData.put("referenceid",referenceid);
-            StatusResponse response= (StatusResponse) gstClient.invokeJsonRequest(HTTPRequestMethod.POST,
-                    PaysprintEndpoints.statusURI,gson.toJson(requestData),authService.getHeaders(),StatusResponse.class);
-            return response;
-
-        }catch (gstException gstException){
-            setException(gstException);
-            return null;
-        }
-    }*/
 }
